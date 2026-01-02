@@ -18,10 +18,10 @@ class ADMCaixasControllers {
 
         try {
 
-            const apiUrl = `${url}/api/administrativo/quebra-caixa-loja.xsjs?idEmpresa=${idEmpresa}&dataPesquisa=${dataFechamento}&page=${page}&pageSize=${pageSize}`;
+            const apiUrl = `${url}/api/administrativo/quebra-caixa-loja.xsjs?idEmpresa=${idEmpresa}&dataPesquisa=${dataPesquisa}`
             const response = await axios.get(apiUrl)
 
-            return res.json(response.data);
+            return res.json(response);
         } catch (error) {
             console.error("Unable to connect to the database:", error);
             throw error;

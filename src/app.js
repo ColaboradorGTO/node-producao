@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import corsMiddleware from './middlewares/cors.js'
-// import routes from './Routes/routes.js';
-import routes from './routes.js';
-
+//import routes from './routes.js'
+ import routes from './Routes/routes.js';
+// import './config/ormConfig.js';
 import bodyParser from 'body-parser';
 import 'dotenv/config';
 
@@ -20,7 +20,7 @@ class App {
         this.server.use(cors({
             // origin: ['http://164.152.245.77:8000', 'http://localhost:5173'],
             // origin: ['http://localhost:5173'],
-            origin: ['', '*'],
+            origin: ['https://confidencial-api.vercel.app', 'https://quality-tau.vercel.app'],
             credentials: true,
             timeout: 50000,
             methods: ["GET", "POST", "PUT", "DELETE"],
