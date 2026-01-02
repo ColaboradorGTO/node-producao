@@ -497,11 +497,7 @@ class AdmVendasControllers {
                 return res.json(response.data);
             } catch (error) {
                 console.error("Erro ao conectar ao servidor:", error.message);
-                return res.status(500).json({ 
-                    error: 'Erro ao buscar resumo de vendas',
-                    message: error.message,
-                    apiUrl: url ? 'configurado' : 'não configurado'
-                });
+                return res.status(500).json({ error: 'Erro ao conectar ao servidor' });
             }
         } else {
             return res.status(400).json({ error: 'idEmpresa inválido' });

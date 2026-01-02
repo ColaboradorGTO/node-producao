@@ -2,7 +2,7 @@ import app from './app.js';
 
 // Para desenvolvimento local
 
-const PORT = process.env.PORT || 6001;
+const PORT =  6001;
   app.listen(PORT, () => {
     console.log(`Servidor rodando na porta `, PORT);
   });
