@@ -14,6 +14,12 @@ import authRoutes from '../Auth/routes/auth.js';
 // import GerenciaClientes from '../Gerencia/cliente/routes/clienteRoutes.js';
 
 const routes = Router();
+
+
+routes.get('/', (req, res) => {
+    res.send('Hello World! Myltiane');
+});
+
 // Adiministrativo
 routes.use(AdministrativoBalanco);
 routes.use(admEstoqueRoutes);

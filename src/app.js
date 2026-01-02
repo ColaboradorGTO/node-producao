@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import corsMiddleware from './middlewares/cors.js'
- import routes from './Routes/routes.js';
+import routes from './Routes/routes.js';
 
 import bodyParser from 'body-parser';
 import 'dotenv/config';
