@@ -5,9 +5,8 @@ import { MovimentoCaixaClient } from "../client/index.js";
 import { MovimentoCaixaService } from "../services/index.js";
 import schemaAtualizarStatus from "../schema/schemaListaAtualizarStatus.js";
 import schemaListaAjusteRecebimento from "../schema/schemaListaAjusteRecebimento.js";
+const url = process.env.API_URL;
 
-//const url = process.env.API_URL;
-const url = 'http://164.152.245.77:8000/quality/concentrador_node';
 const movimentoCaixaClient = new MovimentoCaixaClient(process.env.API_URL);
 const movimentoCaixaService = new MovimentoCaixaService(movimentoCaixaClient);
 class MovimentoCaixaControllers {
