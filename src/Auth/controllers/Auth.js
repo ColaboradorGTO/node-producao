@@ -1,5 +1,5 @@
 import axios from "axios";
-import { autenticacaoUsuario } from "../../Usuarios/repositories/autenticacaoUsuario.js";
+
 
 class AuthentiCationController {
   async login(req, res) {
