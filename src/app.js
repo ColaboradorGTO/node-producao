@@ -19,7 +19,7 @@ class App {
         this.server.use(cors({
             // origin: ['http://164.152.245.77:8000', 'http://localhost:5173'],
             // origin: ['http://localhost:5173'],
-            origin: ['https://confidencial-api.vercel.app', 'https://quality-tau.vercel.app'],
+            origin: ['https://node-producao.vercel.app', ''],
             credentials: true,
             timeout: 50000,
             methods: ["GET", "POST", "PUT", "DELETE"],
