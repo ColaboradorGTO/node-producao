@@ -3,6 +3,10 @@ import EmpresaControllers from './Informatica/Empresas/controller/empresaControl
 
 const routes  = new Router();
 
+routes.get('/', (req, res) => {
+    res.send('Hello World! Myltiane');
+});
+
 routes.get('/listaEmpresasControleTransferencia', EmpresaControllers.getListaEmpresas)
 routes.get('/listaEmpresasIformatica', EmpresaControllers.getListaEmpresasInformatica)
 routes.get('/listaGrupoEmpresas', EmpresaControllers.getListaGrupoEmpresas)
