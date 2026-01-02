@@ -491,13 +491,20 @@ class AdmVendasControllers {
 
             try {
                 const apiUrl = `${url}/api/administrativo/resumo-venda.xsjs?idEmpresa=${idEmpresa}&dataPesquisa=${dataPesquisa}`;
-                const response = await axios.get(apiUrl);
+                const response = await axios.get(apiUrl, {
+                    timeout: 30000
+                });
                 return res.json(response.data);
             } catch (error) {
-                console.error("Erro ao conectar ao servidor:", error);
-
-                throw error;
+                console.error("Erro ao conectar ao servidor:", error.message);
+                return res.status(500).json({ 
+                    error: 'Erro ao buscar resumo de vendas',
+                    message: error.message,
+                    apiUrl: url ? 'configurado' : 'não configurado'
+                });
             }
+        } else {
+            return res.status(400).json({ error: 'idEmpresa inválido' });
         }
     }
 
