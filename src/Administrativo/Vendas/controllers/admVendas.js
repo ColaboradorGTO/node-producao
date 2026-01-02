@@ -497,7 +497,7 @@ class AdmVendasControllers {
                 return res.json(response.data);
             } catch (error) {
                 console.error("Erro ao conectar ao servidor:", error);
-                return res.status(500).json({ error: 'Erro ao conectar ao serv' });
+                throw error;
             }
         } else {
             return res.status(400).json({ error: 'idEmpresa inválido' });
