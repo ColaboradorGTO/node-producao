@@ -492,6 +492,8 @@ class AdmVendasControllers {
             try {
                 const apiUrl = `${url}/api/administrativo/resumo-venda.xsjs?idEmpresa=${idEmpresa}&dataPesquisa=${dataPesquisa}`;
                 const response = await axios.get(apiUrl);
+                console.log(response.data, 'response.data');
+                console.log(response, 'response');
                 return res.json(response.data);
             } catch (error) {
                 console.error("Erro ao conectar ao servidor:", error);
