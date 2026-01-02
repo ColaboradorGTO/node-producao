@@ -23,37 +23,6 @@ routes.get('/', (req, res) => {
 
 // Adiministrativo
 
-routes.get('/venda-total-forma-pagamento', AdmVendasControllers.getRecebimentosFormaPagamento)
-routes.get('/venda-total-recebido-periodo-adm', AdmVendasControllers.getListaVendaTotalRecebido)
-routes.get('/venda-vendedor-adm', AdmVendasControllers.getVendaVendedorAction);
-routes.get('/venda-ativa', AdmVendasControllers.getListaVendaAtiva);
-routes.get('/lista-venda/:id', AdmVendasControllers.getListaVendasById)
-routes.get('/lista-venda-cliente', AdmVendasControllers.getListaVendaCliente);
-routes.get('/vendaConvenio', AdmVendasControllers.getVendaConvenio)
-routes.get('/vendaAtiva', AdmVendasControllers.getVendaAtiva)
-routes.get('/vendaContigencia', AdmVendasControllers.getListaVendasContigenciaPorEmpresa)
-routes.get('/vendaCanceladaEmpresa', AdmVendasControllers.getVendaCancelada30Minutos)
-routes.get('/vendaCanceladaWeb', AdmVendasControllers.getVendaCanceladaWeb)
-routes.get('/vendaCanceladaEmitidaPDV', AdmVendasControllers.getVendaCanceladaEmitidaPDV)
-routes.get('/vendaAtivaCliente', AdmVendasControllers.getListaClientesVendas)
-routes.get('/vendaAtivaResumo', AdmVendasControllers.getVendaAtivaResumo)
-routes.get('/vendaAtivaAction', AdmVendasControllers.getVendaAtivaAction)
-routes.get('/vendaCancelada', AdmVendasControllers.getVendaCancelada)
-routes.get('/vendaCanceladaResumo', AdmVendasControllers.getVendaCanceladaResumo)
-routes.get('/vendaCanceladaResumo', AdmVendasControllers.getListaVendasDetalheAlterar)
-routes.get('/resumoVendaConvenio', AdmVendasControllers.getResumoVendaConvenio)
-routes.get('/resumoVendaConveniodesconto', AdmVendasControllers.getResumoVendaConvenioDesconto)
-routes.get('/resumoVenda', AdmVendasControllers.getResumoVenda)
-routes.get('/recebimento-resumo', AdmVendasControllers.getRetornoListaPagamentoVenda)
-routes.get('/pagamentoTef', AdmVendasControllers.getRetornoListaPagamentoTEFSelect)
-routes.get('/pagamentoPos', AdmVendasControllers.getRetornoListaPagamentoPOSSelect)
-routes.get('/vendaTotalFormaPagamento', AdmVendasControllers.getRetornoListaRecebimentosFormaPagamento)
-routes.get('/listaAlteracaoPreco', AdmVendasControllers.getListaAlteracaoPreco)
-routes.get('/formaPagamentos', AdmVendasControllers.getListaFormaPagamento)
-
-routes.put('/alterar-venda-pagamento/:id', AdmVendasControllers.putAlterarVendasPagamento);
-routes.put('/venda-vendedor/:id', AdmVendasControllers.putVendaVendedor);
-
 
 //Gerencia
 // routes.use(GerenciaAlteracaoPreco);
