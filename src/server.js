@@ -2,10 +2,13 @@ import app from './app.js';
 
 // Para desenvolvimento local
 
-const PORT =  6001;
+if (process.env.PORT) {
+  const PORT = process.env.PORT || 6001;
   app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta `, PORT);
+    console.log(`Servidor rodando na porta ${PORT}`);
   });
+}
+
 
 
 // Para Vercel (Serverless)
