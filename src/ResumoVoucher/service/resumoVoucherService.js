@@ -36,6 +36,16 @@ export class ResumoVoucherService {
         if (!SENHA) {
             throw new Error("SENHA is required, services");
         }
+        if (!IDEMPRESALOGADA) {
+            throw new Error("IDEMPRESALOGADA is required, services");
+        }
+        if (!IDGRUPOEMPRESARIAL) {
+            throw new Error("IDGRUPOEMPRESARIAL is required, services");
+        }
+        if (!IDVENDA) {
+            throw new Error("IDVENDA is required, services");
+        }
+
         const result = await this.client.criarAuthFuncionarioCreateVoucher(
             MATRICULA,
             SENHA,
@@ -80,6 +90,39 @@ export class ResumoVoucherService {
         return result;
     }
 
+    async createAuthFuncionarioUpdateVoucher(
+        MATRICULA,
+        SENHA,
+        IDEMPRESALOGADA,
+        IDGRUPOEMPRESARIAL,
+        IDVOUCHER
+
+    ) {
+        if (!MATRICULA) {
+            throw new Error("MATRICULA is required, services");
+        }
+        if (!SENHA) {
+            throw new Error("SENHA is required, services");
+        }
+        if (!IDEMPRESALOGADA) {
+            throw new Error("IDEMPRESALOGADA is required, services");
+        }
+        if (!IDGRUPOEMPRESARIAL) {
+            throw new Error("IDGRUPOEMPRESARIAL is required, services");
+        }
+        if (!IDVOUCHER) {
+            throw new Error("IDVOUCHER is required, services");
+        }
+        const result = await this.client.criarAuthFuncionarioUpdateVoucher(
+            MATRICULA,
+            SENHA,
+            IDEMPRESALOGADA,
+            IDGRUPOEMPRESARIAL,
+            IDVOUCHER
+        )
+        return result;
+    }
+
     async updateCliente(
         IDCLIENTE,
         IDEMPRESA,
@@ -104,7 +147,6 @@ export class ResumoVoucherService {
         IDINDICACAOIE,
         DSINDICACAOIE,
         IDFUNCIONARIO
-
     ) {
         if (!IDCLIENTE) {
             throw new Error("IDCLIENTE is required, services");
@@ -244,29 +286,14 @@ export class ResumoVoucherService {
         IDEMPRESALOGADA,
         IDGRUPOEMPRESARIAL
     ) {
-        if (!STATIVO) {
-            throw new Error("STATIVO is required, services");
-        }
-        if (!STCANCELADO) {
-            throw new Error("STCANCELADO is required, services");
-        }
-        if (!DSMOTIVOTROCASTATUS) {
-            throw new Error("DSMOTIVOTROCASTATUS is required, services");
-        }
-        if (!IDFUNCIONARIO) {
-            throw new Error("IDFUNCIONARIO is required, services");
-        }
-        if (!STSTATUS) {
-            throw new Error("STSTATUS is required, services");
-        }
         if (!IDVOUCHER) {
             throw new Error("IDVOUCHER is required, services");
         }
         if (!IDEMPRESALOGADA) {
             throw new Error("IDEMPRESALOGADA is required, services");
         }
-        if (!IDGRUPOEMPRESARIAL) {
-            throw new Error("IDGRUPOEMPRESARIAL is required, services");
+        if (!IDFUNCIONARIO) {
+            throw new Error("IDFUNCIONARIO is required, services");
         }
         const result = await this.client.atualizarResumoVoucher(
             STATIVO,

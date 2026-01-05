@@ -2,11 +2,14 @@ import axios from 'axios';
 import 'dotenv/config';
 import { ResumoVoucherClient } from '../client/resumoVoucherClient.js';
 import { ResumoVoucherService } from '../service/resumoVoucherService.js';
-import criarAutorizacaoEditarVoucherSchema from '../schema/resumoVoucherSchema.js';
 import createAuthFuncionarioPrintVoucherSchema from '../schema/createAuthFuncionarioPrintVoucherSchema.js';
 import updateClienteSchema from '../schema/updateClienteSchema.js';
 import createResumoVoucherSchema from '../schema/createResumoVoucherSchema.js';
 import updateResumoVoucherSchema from '../schema/updateResumoVoucherSchema.js';
+import criarAuthFuncionarioCreateVoucherSchema from '../schema/createAuthFuncionarioCreateVoucherSchema.js';
+import createAuthFuncionarioUpdateVoucherSchema from '../schema/createAuthFuncionarioUpdateVoucherSchema.js';
+import createClienteSchema from '../schema/createClienteSchema.js';
+import criarAutorizacaoEditarVoucherSchema from '../schema/createAutorizacaoEditarVoucherSchema.js';
 
 const url = process.env.API_URL;
 const resumoVoucherClient = new ResumoVoucherClient(url);
@@ -130,7 +133,6 @@ class ResumoVoucherControllers {
         let { numeroVoucher, idSubGrupoEmpresa } = req.query;
 
         if (!isNaN(numeroVoucher)) {
-
             idSubGrupoEmpresa = ''
             try {
                 const apiUrl = `${url}/api/resumo-voucher/detalhe-voucher-dados.xsjs?dadosVoucher=${numeroVoucher}&subgrupoEmpresa=${idSubGrupoEmpresa}`
@@ -230,28 +232,9 @@ class ResumoVoucherControllers {
         }
     }
 
-    /*     async autorizacaoEditarStatusVoucher(req, res) {
-            let {
-                MATRICULA,
-                SENHA
-            } = req.body;
-    
-            try {
-                const response = await axios.post(`${url}/api/resumo-voucher/autFuncionario.xsjs`, {
-                    MATRICULA,
-                    SENHA
-                })
-    
-                return res.status(200).json({ message: 'Usuário autorizado com sucesso!' })
-            } catch (error) {
-                console.error("Erro Verifique os campos do formulário:", error);
-                throw error;
-            }
-        } */
-
     async postAuthFuncionarioCreateVoucher(req, res) {
         try {
-            const { error, value } = schemaListaAjusteExtrato.validate(req.body, {
+            const { error, value } = criarAuthFuncionarioCreateVoucherSchema.validate(req.body, {
 
                 abortEarly: false,
                 stripUnknown: true
@@ -282,26 +265,6 @@ class ResumoVoucherControllers {
             return res.status(500).json({ message: 'Erro ExtratosControllers.postListaAjusteExtrato' });
         }
     }
-
-
-    /*     async postAuthFuncionarioCreateVoucher(req, res) {
-            try {
-                let { MATRICULA, SENHA, IDEMPRESALOGADA, IDGRUPOEMPRESARIAL, IDVENDA, STTIPOTROCA } = req.body;
-                const response = await axios.post(`${url}/api/resumo-voucher/auth-funcionario-create-voucher.xsjs`, {
-                    MATRICULA,
-                    SENHA,
-                    IDEMPRESALOGADA,
-                    IDGRUPOEMPRESARIAL,
-                    IDVENDA,
-                    STTIPOTROCA
-                })
-    
-                return res.json(response.data);
-            } catch (error) {
-                console.error("Error no ResumoVoucherControllers.postAuthFuncionarioCreateVoucher:", error);
-                throw error;
-            }
-        } */
 
     async postAuthFuncionarioPrintVoucher(req, res) {
         try {
@@ -336,34 +299,9 @@ class ResumoVoucherControllers {
         }
     }
 
-    /*     async postAuthFuncionarioPrintVoucher(req, res) {
-
-            try {
-                let { MATRICULA, SENHA, IDEMPRESALOGADA, IDGRUPOEMPRESARIAL, IDVOUCHER } = req.body;
-                // const response = await createAuthFuncionarioUpdateVoucher(dados)
-                if (!MATRICULA || !SENHA || !IDEMPRESALOGADA || !IDGRUPOEMPRESARIAL || !IDVOUCHER) {
-                    return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
-                }
-                // const response = await createAuthFuncionarioPrintVoucher(dados)
-                const response = await axios.post(`${url}/api/resumo-voucher/auth-funcionario-print-voucher.xsjs`, {
-                    MATRICULA,
-                    SENHA,
-                    IDEMPRESALOGADA,
-                    IDGRUPOEMPRESARIAL,
-                    IDVOUCHER
-                })
-    
-                return res.json(response.data);
-            } catch (error) {
-                console.error("Error no ResumoVoucherControllers.postAuthFuncionarioPrintVoucher:", error);
-                throw error;
-            }
-        }
-     */
-
     async postAuthFuncionarioUpdateVoucher(req, res) {
         try {
-            const { error, value } = createAuthFuncionarioPrintVoucherSchema.validate(req.body, {
+            const { error, value } = createAuthFuncionarioUpdateVoucherSchema.validate(req.body, {
 
                 abortEarly: false,
                 stripUnknown: true
@@ -379,7 +317,7 @@ class ResumoVoucherControllers {
                 });
             }
 
-            const response = await resumoVoucherService.createAuthFuncionarioPrintVoucher(
+            const response = await resumoVoucherService.createAuthFuncionarioUpdateVoucher(
                 value.MATRICULA,
                 value.SENHA,
                 value.IDEMPRESALOGADA,
@@ -393,29 +331,6 @@ class ResumoVoucherControllers {
             return res.status(500).json({ message: 'Erro ResumoVoucherControllers.postAuthFuncionarioPrintVoucher' });
         }
     }
-
-    /*  async postAuthFuncionarioUpdateVoucher(req, res) {
-         try {
-             let { MATRICULA, SENHA, IDEMPRESALOGADA, IDGRUPOEMPRESARIAL, IDVOUCHER } = req.body;
-             if (!MATRICULA || !SENHA || !IDEMPRESALOGADA || !IDGRUPOEMPRESARIAL || !IDVOUCHER) {
-                 return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
-             }
-             const response = await axios.post(`${url}/api/resumo-voucher/auth-funcionario-update-voucher.xsjs`, {
-                 MATRICULA,
-                 SENHA,
-                 IDEMPRESALOGADA,
-                 IDGRUPOEMPRESARIAL,
-                 IDVOUCHER
-             });
-             return res.json(response.data);
-         } catch (error) {
-             console.error("Error no ResumoVoucherControllers.postAuthFuncionarioUpdateVoucher:", error);
-             // Retorna mensagem de erro mas não lança exceção, permitindo que a API continue rodando normalmente
-             return res.status(500).json({
-                 error: error.response?.data || null
-             });
-         }
-     } */
 
     async putCliente(req, res) {
         try {
@@ -435,7 +350,7 @@ class ResumoVoucherControllers {
                 });
             }
 
-            const response = await resumoVoucherService.createAuthFuncionarioPrintVoucher(
+            const response = await resumoVoucherService.updateCliente(
                 value.IDCLIENTE,
                 value.IDEMPRESA,
                 value.DSNOMERAZAOSOCIAL,
@@ -468,84 +383,9 @@ class ResumoVoucherControllers {
         }
     }
 
-    /*  async putCliente(req, res) {
-         try {
-             let {
-                 IDCLIENTE,
-                 IDEMPRESA,
-                 DSNOMERAZAOSOCIAL,
-                 DSAPELIDONOMEFANTASIA,
-                 TPCLIENTE,
-                 NUCPFCNPJ,
-                 NURGINSCESTADUAL,
-                 NUINSCMUNICIPAL,
-                 NUCEP,
-                 NUIBGE,
-                 EENDERECO,
-                 NUENDERECO,
-                 ECOMPLEMENTO,
-                 EBAIRRO,
-                 ECIDADE,
-                 SGUF,
-                 EEMAIL,
-                 NUTELCOMERCIAL,
-                 NUTELCELULAR,
-                 DTNASCFUNDACAO,
-                 IDINDICACAOIE,
-                 DSINDICACAOIE,
-                 IDFUNCIONARIO
-             } = req.body
- 
-             if (!IDCLIENTE) {
-                 return res.status(400).json({ error: 'IDCLIENTE é obrigatório.' });
-             }
- 
-             if (!IDFUNCIONARIO) {
-                 return res.status(400).json({ error: 'IDFUNCIONARIO é obrigatório.' });
-             }
- 
-             if (!NUCPFCNPJ) {
-                 return res.status(400).json({ error: 'NUCPFCNPJ é obrigatório.' });
-             }
- 
-             const response = await axios.put(`${url}/api/gerencia/cliente.xsjs`, {
-                 IDCLIENTE,
-                 IDEMPRESA,
-                 DSNOMERAZAOSOCIAL,
-                 DSAPELIDONOMEFANTASIA,
-                 TPCLIENTE,
-                 NUCPFCNPJ,
-                 NURGINSCESTADUAL,
-                 NUINSCMUNICIPAL,
-                 NUCEP,
-                 NUIBGE,
-                 EENDERECO,
-                 NUENDERECO,
-                 ECOMPLEMENTO,
-                 EBAIRRO,
-                 ECIDADE,
-                 SGUF,
-                 EEMAIL,
-                 NUTELCOMERCIAL,
-                 NUTELCELULAR,
-                 DTNASCFUNDACAO,
-                 IDINDICACAOIE,
-                 DSINDICACAOIE,
-                 IDFUNCIONARIO
-             });
- 
-             return res.status(200).json({ message: 'Cliente atualizado com sucesso!' });
- 
-         } catch (error) {
-             console.error("Erro no ResumoVoucherControllers.putCliente:", error);
-             return res.status(400).json({ error: error.message });
-         }
-     }
-  */
-
     async postCliente(req, res) {
         try {
-            const { error, value } = updateClienteSchema.validate(req.body, {
+            const { error, value } = createClienteSchema.validate(req.body, {
 
                 abortEarly: false,
                 stripUnknown: true
@@ -561,8 +401,7 @@ class ResumoVoucherControllers {
                 });
             }
 
-            const response = await resumoVoucherService.createAuthFuncionarioPrintVoucher(
-                value.IDCLIENTE,
+            const response = await resumoVoucherService.createCliente(
                 value.IDEMPRESA,
                 value.DSNOMERAZAOSOCIAL,
                 value.DSAPELIDONOMEFANTASIA,
@@ -593,81 +432,6 @@ class ResumoVoucherControllers {
             return res.status(500).json({ message: 'Erro ResumoVoucherControllers.postCliente' });
         }
     }
-
-    /*     async postCliente(req, res) {
-            try {
-    
-                let {
-                    IDCLIENTE,
-                    IDEMPRESA,
-                    DSNOMERAZAOSOCIAL,
-                    DSAPELIDONOMEFANTASIA,
-                    TPCLIENTE,
-                    NUCPFCNPJ,
-                    NURGINSCESTADUAL,
-                    NUINSCMUNICIPAL,
-                    NUCEP,
-                    NUIBGE,
-                    EENDERECO,
-                    NUENDERECO,
-                    ECOMPLEMENTO,
-                    EBAIRRO,
-                    ECIDADE,
-                    SGUF,
-                    EEMAIL,
-                    NUTELCOMERCIAL,
-                    NUTELCELULAR,
-                    DTNASCFUNDACAO,
-                    IDINDICACAOIE,
-                    DSINDICACAOIE,
-                    IDFUNCIONARIO
-                } = req.body
-    
-                // const response = await createCliente(dados);
-    
-                // if(!IDCLIENTE) {
-                //     return res.status(400).json({ error: 'IDCLIENTE é obrigatório.' });
-                // }   
-    
-                // if(!IDFUNCIONARIO) {
-                //     return res.status(400).json({ error: 'IDFUNCIONARIO é obrigatório.' });
-                // }
-    
-                if (!NUCPFCNPJ) {
-                    return res.status(400).json({ error: 'NUCPFCNPJ é obrigatório.' });
-                }
-    
-                const response = await axios.post(`${url}/api/gerencia/cliente.xsjs`, {
-                    IDEMPRESA,
-                    DSNOMERAZAOSOCIAL,
-                    DSAPELIDONOMEFANTASIA,
-                    TPCLIENTE,
-                    NUCPFCNPJ,
-                    NURGINSCESTADUAL,
-                    NUINSCMUNICIPAL,
-                    NUCEP,
-                    NUIBGE,
-                    EENDERECO,
-                    NUENDERECO,
-                    ECOMPLEMENTO,
-                    EBAIRRO,
-                    ECIDADE,
-                    SGUF,
-                    EEMAIL,
-                    NUTELCOMERCIAL,
-                    NUTELCELULAR,
-                    DTNASCFUNDACAO,
-                    IDINDICACAOIE,
-                    DSINDICACAOIE,
-                    IDFUNCIONARIO
-                });
-    
-                return res.status(200).json(response.data);
-            } catch (error) {
-                console.error("Erro no ResumoVoucherControllers.postCliente:", error);
-                return res.status(400).json({ error: error.message });
-            }
-        } */
 
     async postResumoVoucher(req, res) {
         try {
@@ -707,57 +471,10 @@ class ResumoVoucherControllers {
 
             return res.status(200).json(response);
         } catch (error) {
-            console.log('Erro no ResumoVoucherControllers.postCliente', error);
-            return res.status(500).json({ message: 'Erro ResumoVoucherControllers.postCliente' });
+            console.log('Erro no ResumoVoucherControllers.postResumoVoucher', error);
+            return res.status(500).json({ message: 'Erro ResumoVoucherControllers.postResumoVoucher' });
         }
     }
-
-    /*     async postResumoVoucher(req, res) {
-            try {
-                let {
-                    IDGRUPOEMPRESARIAL,
-                    IDEMPRESAORIGEM,
-                    IDCAIXAORIGEM,
-                    IDNFEDEVOLUCAO,
-                    IDUSRINVOUCHER,
-                    IDVENDEDOR,
-                    IDCLIENTE,
-                    NUCPF,
-                    VRVOUCHER,
-                    IDRESUMOVENDAWEB,
-                    STTIPOTROCA,
-                    MOTIVOTROCA,
-                    IDUSRLIBERACAOCRIACAO,
-                    detVoucher,
-                    produtosVoucher
-                } = req.body;
-    
-    
-                const response = await axios.post(`${url}/api/resumo-voucher/todos-web.xsjs`, {
-                    IDGRUPOEMPRESARIAL,
-                    IDEMPRESAORIGEM,
-                    IDCAIXAORIGEM,
-                    IDNFEDEVOLUCAO,
-                    IDUSRINVOUCHER,
-                    IDVENDEDOR,
-                    IDCLIENTE,
-                    NUCPF,
-                    VRVOUCHER,
-                    IDRESUMOVENDAWEB,
-                    STTIPOTROCA,
-                    MOTIVOTROCA,
-                    IDUSRLIBERACAOCRIACAO,
-                    detVoucher,
-                    produtosVoucher
-                });
-                console.log(response.data);
-                return res.status(200).json(response.data);
-            } catch (error) {
-                console.error("Erro no ResumoVoucherControllers.postResumoVoucher:", error);
-                return res.status(400).json({ error: error.message });
-            }
-        } */
-
 
     async putResumoVoucher(req, res) {
         try {
@@ -795,45 +512,6 @@ class ResumoVoucherControllers {
             return res.status(500).json({ message: 'Erro ResumoVoucherControllers.putResumoVoucher' });
         }
     }
-
-    /*  async putResumoVoucher(req, res) {
-         try {
- 
-             let { STATIVO, STCANCELADO, DSMOTIVOTROCASTATUS, IDFUNCIONARIO, STSTATUS, STTIPOTROCA, IDVOUCHER, IDEMPRESALOGADA, IDGRUPOEMPRESARIAL } = req.body;
- 
-             // const response = await updateResumoVoucher(dados);
- 
-             // if(!IDVOUCHER) {
-             //     return res.status(400).json({ error: 'IDVOUCHER é obrigatório.' });
-             // }
- 
-             // if(!IDEMPRESALOGADA) {
-             //     return res.status(400).json({ error: 'IDEMPRESALOGADA é obrigatório.' });
-             // }
- 
-             // if(!IDFUNCIONARIO) {
-             //     return res.status(400).json({ error: 'IDFUNCIONARIO é obrigatório.' });
-             // }
- 
-             const response = await axios.put(`${url}/api/resumo-voucher/todos-web.xsjs`, {
-                 STATIVO,
-                 STCANCELADO,
-                 DSMOTIVOTROCASTATUS,
-                 IDFUNCIONARIO,
-                 STSTATUS,
-                 STTIPOTROCA,
-                 IDVOUCHER,
-                 IDEMPRESALOGADA,
-                 IDGRUPOEMPRESARIAL
-             })
- 
-             return res.status(200).json(response.data);
-         } catch (error) {
-             console.error("Erro no ResumoVoucherControllers.putResumoVoucher:", error);
-             return res.status(400).json({ error: error.message });
-         }
-     } */
 }
-
 
 export default new ResumoVoucherControllers();

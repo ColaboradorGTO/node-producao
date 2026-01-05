@@ -1,41 +1,75 @@
 import Joi from "joi";
 
 const updateResumoVoucherSchema = Joi.object({
-    STATIVO: Joi.string().allow()
+    IDVOUCHER: Joi.number().required()
         .messages({
-            "string.base": "STATIVO deve ser um número",
+            "number.base": "IDVOUCHER deve ser um número",
+            "any.required": "O campo IDVOUCHER é obrigatório"
         }),
-    STCANCELADO: Joi.string().allow()
+
+    IDGRUPOEMPRESARIAL: Joi.number().required()
         .messages({
-            "string.base": "STCANCELADO deve ser um número",
+            "number.base": "IDGRUPOEMPRESARIAL deve ser um número",
+            "any.required": "O campo IDGRUPOEMPRESARIAL é obrigatório"
         }),
-    DSMOTIVOTROCASTATUS: Joi.string().allow()
+
+    IDEMPRESALOGADA: Joi.number().required()
         .messages({
-            "string.base": "DSMOTIVOTROCASTATUS deve ser um número",
+            "number.base": "IDEMPRESALOGADA deve ser um número",
+            "any.required": "O campo IDEMPRESALOGADA é obrigatório"
         }),
-    IDFUNCIONARIO: Joi.string().allow()
+
+    IDFUNCIONARIO: Joi.number().required()
         .messages({
-            "string.base": "IDFUNCIONARIO deve ser um número",
+            "number.base": "IDFUNCIONARIO deve ser um número",
+            "any.required": "O campo IDFUNCIONARIO é obrigatório"
         }),
-    STSTATUS: Joi.string().allow()
+
+    STSTATUS: Joi.string()
+        .valid(
+            "NOVO",
+            "EM ANALISE",
+            "LIBERADO PARA O CLIENTE",
+            "FINALIZADO",
+            "CANCELADO",
+            "NEGADO"
+        )
+        .required()
         .messages({
-            "string.base": "STSTATUS deve ser um número",
+            "any.only": "STSTATUS possui valor inválido",
+            "any.required": "O campo STSTATUS é obrigatório"
         }),
-    STTIPOTROCA: Joi.string().allow()
+
+    STTIPOTROCA: Joi.string()
+        .valid("DEFEITO", "DESISTENCIA", "TAMANHO", "OUTRO")
+        .required()
         .messages({
-            "string.base": "STTIPOTROCA deve ser um número",
+            "any.only": "STTIPOTROCA possui valor inválido",
+            "any.required": "O campo STTIPOTROCA é obrigatório"
         }),
-    IDVOUCHER: Joi.string().allow()
+
+    DSMOTIVOTROCASTATUS: Joi.string()
+        .max(255)
+        .allow(null)
         .messages({
-            "string.base": "IDVOUCHER deve ser um número",
+            "string.max": "DSMOTIVOTROCASTATUS deve ter no máximo 255 caracteres"
         }),
-    IDEMPRESALOGADA: Joi.string().allow()
+
+    STATIVO: Joi.string()
+        .valid("True", "False")
+        .required()
         .messages({
-            "string.base": "IDEMPRESALOGADA deve ser um número",
+            "any.only": "STATIVO deve ser 'True' ou 'False'",
+            "any.required": "O campo STATIVO é obrigatório"
         }),
-    IDGRUPOEMPRESARIAL: Joi.string().allow()
+
+    STCANCELADO: Joi.string()
+        .valid("True", "False")
+        .required()
         .messages({
-            "string.base": "IDGRUPOEMPRESARIAL deve ser um número",
-        }),
+            "any.only": "STCANCELADO deve ser 'True' ou 'False'",
+            "any.required": "O campo STCANCELADO é obrigatório"
+        })
 });
+
 export default updateResumoVoucherSchema;

@@ -1,58 +1,185 @@
 import Joi from "joi";
 
 const createResumoVoucherSchema = Joi.object({
-    IDGRUPOEMPRESARIAL: Joi.string().allow()
+    IDGRUPOEMPRESARIAL: Joi.number().required()
         .messages({
-            "string.base": "IDGRUPOEMPRESARIAL deve ser um número",
+            "number.base": "IDGRUPOEMPRESARIAL deve ser um número",
+            "any.required": "O campo IDGRUPOEMPRESARIAL é obrigatório"
         }),
-    IDEMPRESAORIGEM: Joi.string().allow()
+
+    IDEMPRESAORIGEM: Joi.number().required()
         .messages({
-            "string.base": "IDEMPRESAORIGEM deve ser um número",
+            "number.base": "IDEMPRESAORIGEM deve ser um número",
+            "any.required": "O campo IDEMPRESAORIGEM é obrigatório"
         }),
-    IDCAIXAORIGEM: Joi.string().allow()
+
+    IDCAIXAORIGEM: Joi.number().required()
         .messages({
-            "string.base": "IDCAIXAORIGEM deve ser um número",
+            "number.base": "IDCAIXAORIGEM deve ser um número",
+            "any.required": "O campo IDCAIXAORIGEM é obrigatório"
         }),
-    IDNFEDEVOLUCAO: Joi.string().allow()
+
+    IDNFEDEVOLUCAO: Joi.number().allow(null)
         .messages({
-            "string.base": "IDNFEDEVOLUCAO deve ser um número",
+            "number.base": "IDNFEDEVOLUCAO deve ser um número"
         }),
-    IDUSRINVOUCHER: Joi.string().allow()
+
+    IDUSRINVOUCHER: Joi.number().required()
         .messages({
-            "string.base": "IDUSRINVOUCHER deve ser um número",
+            "number.base": "IDUSRINVOUCHER deve ser um número",
+            "any.required": "O campo IDUSRINVOUCHER é obrigatório"
         }),
-    IDVENDEDOR: Joi.string().allow()
+
+    IDVENDEDOR: Joi.number().required()
         .messages({
-            "string.base": "IDVENDEDOR deve ser um número",
+            "number.base": "IDVENDEDOR deve ser um número",
+            "any.required": "O campo IDVENDEDOR é obrigatório"
         }),
-    IDCLIENTE: Joi.string().allow()
+
+    IDCLIENTE: Joi.number().required()
         .messages({
-            "string.base": "IDCLIENTE deve ser um número",
+            "number.base": "IDCLIENTE deve ser um número",
+            "any.required": "O campo IDCLIENTE é obrigatório"
         }),
-    VRVOUCHER: Joi.string().allow()
+
+    NUCPF: Joi.string()
+        .min(11)
+        .max(14)
+        .required()
         .messages({
-            "string.base": "VRVOUCHER deve ser um número",
+            "string.base": "NUCPF deve ser uma string numérica",
+            "string.min": "NUCPF deve ter 11 ou 14 caracteres",
+            "string.max": "NUCPF deve ter 11 ou 14 caracteres",
+            "any.required": "O campo NUCPF é obrigatório"
         }),
-    IDRESUMOVENDAWEB: Joi.string().allow()
+
+    VRVOUCHER: Joi.number()
+        .precision(2)
+        .required()
         .messages({
-            "string.base": "IDRESUMOVENDAWEB deve ser um número",
+            "number.base": "VRVOUCHER deve ser um número",
+            "any.required": "O campo VRVOUCHER é obrigatório"
         }),
-    MOTIVOTROCA: Joi.string().allow()
+
+    IDRESUMOVENDAWEB: Joi.number().required()
         .messages({
-            "string.base": "MOTIVOTROCA deve ser um número",
+            "number.base": "IDRESUMOVENDAWEB deve ser um número",
+            "any.required": "O campo IDRESUMOVENDAWEB é obrigatório"
         }),
-    IDUSRLIBERACAOCRIACAO: Joi.string().allow()
+
+    STTIPOTROCA: Joi.string()
+        .valid("DEFEITO", "DESISTENCIA", "TAMANHO", "OUTRO")
+        .required()
         .messages({
-            "string.base": "IDUSRLIBERACAOCRIACAO deve ser um número",
+            "any.only": "STTIPOTROCA deve ser DEFEITO, DESISTENCIA, TAMANHO ou OUTRO",
+            "any.required": "O campo STTIPOTROCA é obrigatório"
         }),
-    detVoucher: Joi.string().allow()
+
+    MOTIVOTROCA: Joi.string()
+        .max(255)
+        .required()
         .messages({
-            "string.base": "detVoucher deve ser um número",
+            "string.base": "MOTIVOTROCA deve ser uma string",
+            "string.max": "MOTIVOTROCA deve ter no máximo 255 caracteres",
+            "any.required": "O campo MOTIVOTROCA é obrigatório"
         }),
-    produtosVoucher: Joi.string().allow()
+
+    IDUSRLIBERACAOCRIACAO: Joi.number().required()
         .messages({
-            "string.base": "produtosVoucher deve ser um número",
+            "number.base": "IDUSRLIBERACAOCRIACAO deve ser um número",
+            "any.required": "O campo IDUSRLIBERACAOCRIACAO é obrigatório"
         }),
+
+    detVoucher: Joi.object({
+        STSTATUS: Joi.string()
+            .valid(
+                "NOVO",
+                "EM ANALISE",
+                "LIBERADO PARA O CLIENTE",
+                "FINALIZADO",
+                "CANCELADO",
+                "NEGADO"
+            )
+            .required()
+            .messages({
+                "any.only": "STSTATUS possui valor inválido",
+                "any.required": "O campo detVoucher.STSTATUS é obrigatório"
+            }),
+
+        DSMOTIVOTROCASTATUS: Joi.string()
+            .max(255)
+            .allow(null)
+            .messages({
+                "string.max": "DSMOTIVOTROCASTATUS deve ter no máximo 255 caracteres"
+            })
+    }).required()
+        .messages({
+            "any.required": "O objeto detVoucher é obrigatório"
+        }),
+
+    produtosVoucher: Joi.array()
+        .items(
+            Joi.object({
+                IDVENDADETALHE: Joi.string().required()
+                    .messages({
+                        "any.required": "IDVENDADETALHE é obrigatório"
+                    }),
+
+                IDPRODUTO: Joi.string().required()
+                    .messages({
+                        "any.required": "IDPRODUTO é obrigatório"
+                    }),
+
+                QTD: Joi.number().positive().required()
+                    .messages({
+                        "number.base": "QTD deve ser um número",
+                        "number.positive": "QTD deve ser maior que zero",
+                        "any.required": "QTD é obrigatório"
+                    }),
+
+                VRUNIT: Joi.number().precision(2).required()
+                    .messages({
+                        "number.base": "VRUNIT deve ser um número",
+                        "any.required": "VRUNIT é obrigatório"
+                    }),
+
+                VRTOTALBRUTO: Joi.number().precision(2).required()
+                    .messages({
+                        "number.base": "VRTOTALBRUTO deve ser um número",
+                        "any.required": "VRTOTALBRUTO é obrigatório"
+                    }),
+
+                VRDESCONTO: Joi.number().precision(2).required()
+                    .messages({
+                        "number.base": "VRDESCONTO deve ser um número",
+                        "any.required": "VRDESCONTO é obrigatório"
+                    }),
+
+                VRTOTALLIQUIDO: Joi.number().precision(2).required()
+                    .messages({
+                        "number.base": "VRTOTALLIQUIDO deve ser um número",
+                        "any.required": "VRTOTALLIQUIDO é obrigatório"
+                    }),
+
+                VDESC: Joi.number().precision(2).required()
+                    .messages({
+                        "number.base": "VDESC deve ser um número",
+                        "any.required": "VDESC é obrigatório"
+                    }),
+
+                STTROCA: Joi.string().valid("True", "False").required()
+                    .messages({
+                        "any.only": "STTROCA deve ser 'True' ou 'False'",
+                        "any.required": "STTROCA é obrigatório"
+                    })
+            })
+        )
+        .min(1)
+        .required()
+        .messages({
+            "array.min": "Deve existir ao menos um produto em produtosVoucher",
+            "any.required": "O campo produtosVoucher é obrigatório"
+        })
 });
 
 export default createResumoVoucherSchema;
