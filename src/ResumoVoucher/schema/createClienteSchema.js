@@ -1,11 +1,7 @@
 import Joi from "joi";
 
-const updateClienteSchema = Joi.object({
-    IDCLIENTE: Joi.number().required()
-        .messages({
-            "string.base": "IDCLIENTE deve ser um número",
-            "any.required": "O campo IDCLIENTE é obrigatório"
-        }),
+const createClienteSchema = Joi.object({
+
     IDEMPRESA: Joi.number().required()
         .messages({
             "number.base": "IDEMPRESA deve ser um número",
@@ -116,4 +112,4 @@ const updateClienteSchema = Joi.object({
         })
 });
 
-export default updateClienteSchema;
+export default createClienteSchema;

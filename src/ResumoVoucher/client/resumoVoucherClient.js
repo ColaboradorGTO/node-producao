@@ -45,16 +45,31 @@ export class ResumoVoucherClient {
         SENHA,
         IDEMPRESALOGADA,
         IDGRUPOEMPRESARIAL,
-        IDVENDA,
-        STTIPOTROCA
+        IDVOUCHER
     ) {
         const response = await this.api.post(`${url}/api/resumo-voucher/auth-funcionario-print-voucher.xsjs`, {
             MATRICULA,
             SENHA,
             IDEMPRESALOGADA,
             IDGRUPOEMPRESARIAL,
-            IDVENDA,
-            STTIPOTROCA
+            IDVOUCHER
+        });
+        return response.data;
+    }
+
+    async criarAuthFuncionarioUpdateVoucher(
+        MATRICULA,
+        SENHA,
+        IDEMPRESALOGADA,
+        IDGRUPOEMPRESARIAL,
+        IDVOUCHER
+    ) {
+        const response = await this.api.post(`${url}/api/resumo-voucher/auth-funcionario-print-voucher.xsjs`, {
+            MATRICULA,
+            SENHA,
+            IDEMPRESALOGADA,
+            IDGRUPOEMPRESARIAL,
+            IDVOUCHER
         });
         return response.data;
     }
