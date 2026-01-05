@@ -98,6 +98,7 @@ import LogsUsuariosRoutes from '../LogsUsuario/routes/logsUsuariosRoutes.js';
 import ProdutosRoutes from '../Produtos/routes/produto.js';
 import ModulosRoutes from '../Modulos/routes/index.js';
 import ResumoVoucherRoutes from '../ResumoVoucher/routes/resumoVoucher.js';
+import VendasRoutes from '../Vendas/routes/vendas.js';
 
 
 const routes = Router();
@@ -245,5 +246,8 @@ routes.use(ModulosRoutes);
 
 //Resumo Voucher
 routes.use(ResumoVoucherRoutes)
+
+//Vendas
+routes.use(VendasRoutes);
 export default routes;
 
